@@ -79,6 +79,17 @@ short_default_prompt = '''Please generate a JSON object containing the following
 - `description`: a concise paragraph of text (no more than 100 words) precisely describing the image, its style, mood and atmosphere. Limit strictly the usage of subjective claims such as “beautiful,” “amazing,” or “stunning” unless the visual style clearly requires them.
 '''
 
+# About strings
+about_string='''LLM Photo Profiler
+
+This program is a simple tool that allows to generate titles, keywords and descriptions for categorisation of digital images using local or remote OpenAI API-compatible multimodal LLM (QWen, Google Gemma, etc.).
+
+LLM Photo Profiler is a free software distributed under the conditions of GNU GPL v3.0 License.
+
+©twdragon, https://gallery.twdragon.net'''
+
+copyright_string='LLM Photo Profiler by twdragon'
+
 # Internal API
 class Profiler:
     def __init__(self):
@@ -298,6 +309,9 @@ class ProfilerWindow(QMainWindow):
         actionPurgeDescription = QAction('Purge &descriptive metadata (Title, Keywords, Description)', self)
         actionPurgeDescription.setIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_FileIcon))
         actionPurgeDescription.triggered.connect(self.purge_descriptive)
+        # About window
+        actionAbout = QAction('&About', self)
+        actionAbout.triggered.connect(self.show_about)
 # Creating global GUI objects
         self.setWindowTitle('LLM Photo Profiler')
         menu = self.menuBar()
@@ -343,7 +357,7 @@ class ProfilerWindow(QMainWindow):
         llm_menu.addAction(actionStopServer)
         # Menu bar: About
         help_menu = menu.addMenu('&Help')
-        help_menu.addAction(QAction('&About', self))
+        help_menu.addAction(actionAbout)
         # Toolbar: Main
         toolbar.addAction(actionLoadImages)
         toolbar.addAction(actionSaveEdits)
@@ -609,6 +623,9 @@ class ProfilerWindow(QMainWindow):
             self.app_timeout_slider.setValue(self.app_timeout)
 
 # GUI handler functions
+    def show_about(self):
+        QMessageBox.about(self, copyright_string, about_string)
+
     def enumerate_directory(self):
         probe_string = QFileDialog.getExistingDirectory(self, 'Select Directory', str(self.last_directory))
         probe_directory = Path(probe_string).resolve() if probe_string else None
