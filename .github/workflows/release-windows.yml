@@ -46,7 +46,7 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                 name: '${{ env.APPLICATION_NAME }}-win64'
-                path: '\"profiler/package/${{ env.APPLICATION_NAME }}.exe\"'
+                path: 'profiler/package/${{ env.APPLICATION_NAME }}.exe'
     upload-release:
         needs: package
         if: github.ref_type == 'tag'
@@ -62,6 +62,6 @@ jobs:
               with:
                 name: ${{ github.ref_name }}
                 tag_name: ${{ github.ref_name }}
-                files: '\"package/${{ env.APPLICATION_NAME }}.exe\"'
+                files: 'package/*.exe'
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
