@@ -58,10 +58,14 @@ jobs:
               uses: actions/download-artifact@v4
               with:
                 name: '${{ env.APPLICATION_NAME }}-win64'
-                path: 'package'
+                path: 'package-win-x64'
+            - name: 'Architecture Suffix'
+              run: |
+                mkdir all-arch
+                mv -v "package-win-x64/${{ env.APPLICATION_NAME }}.exe" "all-arch/${{ env.APPLICATION_NAME }}-win64.exe" 
             - name: 'Create Release'
               uses: softprops/action-gh-release@v3
               with:
                 name: ${{ github.ref_name }}
                 tag_name: ${{ github.ref_name }}
-                files: 'package/*.exe'
+                files: 'all-arch/${{ env.APPLICATION_NAME }}-win64.exe'
