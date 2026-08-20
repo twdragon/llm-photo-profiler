@@ -43,7 +43,7 @@ jobs:
                 pyinstaller --onefile --noconsole --name "${{ env.APPLICATION_NAME }}" --distpath "package" "${{ env.MASTER_SCRIPT }}"
                 cd ..
             - name: 'Upload artifact'
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v7
               with:
                 name: '${{ env.APPLICATION_NAME }}-win64'
                 path: 'profiler/package/${{ env.APPLICATION_NAME }}.exe'
@@ -55,7 +55,7 @@ jobs:
             contents: write
         steps:
             - name: 'Download artifact'
-              uses: actions/download-artifact@v4
+              uses: actions/download-artifact@v8
               with:
                 name: '${{ env.APPLICATION_NAME }}-win64'
                 path: 'package-win-x64'
