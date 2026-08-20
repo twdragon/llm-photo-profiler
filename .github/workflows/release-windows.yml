@@ -51,6 +51,8 @@ jobs:
         needs: package
         if: github.ref_type == 'tag'
         runs-on: ubuntu-latest
+        permissions:
+            contents: write
         steps:
             - name: 'Download artifact'
               uses: actions/download-artifact@v4
@@ -63,5 +65,3 @@ jobs:
                 name: ${{ github.ref_name }}
                 tag_name: ${{ github.ref_name }}
                 files: 'package/*.exe'
-              env:
-                GITHUB_TOKEN: ${{ secrets.RELEASE_CREATION }}
